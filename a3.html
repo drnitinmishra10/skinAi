@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skin Tone Diversity in Dermatological AI – Research Paper</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #3a3a3a;
+    --ink-muted: #666;
+    --rule: #c8b89a;
+    --rule-light: #e8ddd0;
+    --accent: #8b1a1a;
+    --accent-soft: #b85050;
+    --bg: #faf8f4;
+    --bg-warm: #f5f0e8;
+    --bg-panel: #ede8de;
+    --gold: #9a7b2e;
+    --body-font: 'EB Garamond', Georgia, serif;
+    --sans-font: 'Source Sans 3', sans-serif;
+    --mono-font: 'JetBrains Mono', monospace;
+    --col-width: 720px;
+    --wide-width: 900px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body-font);
+    font-size: 18px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Header band ── */
+  .journal-header {
+    background: var(--ink);
+    color: #f0ebe0;
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--sans-font);
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .journal-header .journal-name { font-weight: 600; font-size: 13px; color: var(--rule); letter-spacing: .12em; }
+  .journal-header .journal-meta { opacity: .7; }
+
+  /* ── Page container ── */
+  .page {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  /* ── Title block ── */
+  .title-block {
+    border-top: 3px solid var(--accent);
+    border-bottom: 1px solid var(--rule);
+    padding: 44px 0 36px;
+    margin-bottom: 40px;
+  }
+  .paper-title {
+    font-family: var(--body-font);
+    font-size: 2.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+    letter-spacing: -.01em;
+    margin-bottom: 28px;
+  }
+  .paper-title em { font-style: italic; color: var(--accent); }
+
+  /* ── Authors ── */
+  .authors-block {
+    font-family: var(--sans-font);
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    padding: 20px 24px;
+    background: var(--bg-warm);
+    border-left: 3px solid var(--gold);
+    border-radius: 2px;
+  }
+  .authors-block .author-names {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .authors-block .affil {
+    margin-bottom: 6px;
+    display: flex;
+    gap: 8px;
+  }
+  .authors-block .affil-num {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+    min-width: 14px;
+    padding-top: 2px;
+  }
+  .authors-block .email {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  /* ── Abstract box ── */
+  .abstract-box {
+    background: var(--bg-panel);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 28px 32px;
+    margin-bottom: 44px;
+    font-size: 16.5px;
+    line-height: 1.8;
+  }
+  .abstract-box h2 {
+    font-family: var(--sans-font);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .abstract-box p { color: var(--ink-soft); }
+
+  /* ── Keywords ── */
+  .keywords-line {
+    margin-bottom: 52px;
+    font-family: var(--sans-font);
+    font-size: 14px;
+    color: var(--ink-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .keywords-line .kw-label {
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: .04em;
+    margin-right: 4px;
+  }
+  .kw-tag {
+    background: var(--bg-warm);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 2px 10px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* ── Section headings ── */
+  .section { margin-bottom: 52px; }
+
+  h1.sec-title {
+    font-family: var(--sans-font);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule-light);
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+  }
+  h2.sub-title {
+    font-family: var(--body-font);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 28px 0 10px;
+  }
+  h3.sub-sub-title {
+    font-family: var(--sans-font);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin: 20px 0 8px;
+    letter-spacing: .04em;
+  }
+
+  /* ── Body text ── */
+  p { margin-bottom: 16px; color: var(--ink-soft); text-align: justify; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); }
+  em { color: var(--ink-soft); }
+
+  /* ── Inline citation ── */
+  cite {
+    font-style: normal;
+    font-family: var(--mono-font);
+    font-size: 13px;
+    color: var(--accent);
+    vertical-align: super;
+    line-height: 0;
+  }
+
+  /* ── Figure block ── */
+  .figure-block {
+    background: var(--bg-warm);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 24px 28px;
+    margin: 32px 0;
+    font-family: var(--sans-font);
+    font-size: 13.5px;
+  }
+  .figure-block .fig-label {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .figure-block .fig-caption {
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .figure-block .prompt-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .figure-block .prompt-text {
+    background: #1e1e1e;
+    color: #d4c9a8;
+    border-radius: 3px;
+    padding: 14px 16px;
+    font-family: var(--mono-font);
+    font-size: 12px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  /* ── Gap / Technique cards ── */
+  .gap-card {
+    border-left: 3px solid var(--accent-soft);
+    padding: 14px 20px;
+    margin: 22px 0;
+    background: var(--bg-warm);
+    border-radius: 0 3px 3px 0;
+  }
+  .gap-card .gap-title {
+    font-family: var(--sans-font);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .tech-chip {
+    display: inline-block;
+    background: var(--bg-panel);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 3px 10px;
+    font-family: var(--sans-font);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 3px 3px 3px 0;
+  }
+
+  /* ── Framework steps ── */
+  .steps-list {
+    counter-reset: steps;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+  }
+  .steps-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+    align-items: flex-start;
+  }
+  .steps-list li::before {
+    content: counter(steps);
+    font-family: var(--mono-font);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--accent);
+    min-width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .steps-list li .step-body { color: var(--ink-soft); font-size: 17px; }
+  .steps-list li .step-title { font-weight: 600; color: var(--ink); }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sans-font);
+    font-size: 14px;
+    margin: 24px 0;
+  }
+  thead tr {
+    background: var(--ink);
+    color: #f0ebe0;
+  }
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: .04em;
+    font-size: 12.5px;
+    text-transform: uppercase;
+  }
+  tbody tr:nth-child(even) { background: var(--bg-warm); }
+  tbody tr:nth-child(odd)  { background: var(--bg); }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule-light);
+    color: var(--ink-soft);
+    vertical-align: top;
+  }
+  .table-cap {
+    font-family: var(--sans-font);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: -16px;
+    margin-bottom: 24px;
+  }
+
+  /* ── References ── */
+  .references-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: refs;
+  }
+  .references-list li {
+    counter-increment: refs;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .references-list li::before {
+    content: "[" counter(refs) "]";
+    font-family: var(--mono-font);
+    font-size: 12px;
+    color: var(--accent);
+    min-width: 34px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  .page-footer {
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule-light);
+    font-family: var(--sans-font);
+    font-size: 12px;
+    color: var(--ink-muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ── Utility ── */
+  hr.rule { border: none; border-top: 1px solid var(--rule-light); margin: 40px 0; }
+
+  @media (max-width: 680px) {
+    .page { padding: 32px 20px 60px; }
+    .paper-title { font-size: 1.55rem; }
+    .journal-header { flex-direction: column; gap: 4px; text-align: center; }
+  }
+
+  @media print {
+    body { font-size: 11pt; }
+    .journal-header { display: none; }
+    .page { padding: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Journal Header -->
+<div class="journal-header">
+  <span class="journal-name">IEEE / Scopus Q1 · Artificial Intelligence in Healthcare</span>
+  <span class="journal-meta">Submitted Manuscript · 2025 · DOI: Pending</span>
+</div>
+
+<div class="page">
+
+  <!-- ═══════════════════════════════ TITLE BLOCK ═══════════════════════════════ -->
+  <div class="title-block">
+    <h1 class="paper-title">
+      Bridging the Chromatic Divide: Addressing <em>Skin Tone Diversity</em> in Dermatological
+      Artificial Intelligence Through Fairness-Aware Learning, Generative Augmentation,
+      and Explainable Multi-Modal Frameworks
+    </h1>
+    <div class="authors-block">
+      <div class="author-names">Dr. Nitin Mishra<sup>1</sup>, Dr. Rohit<sup>2</sup></div>
+      <div class="affil"><span class="affil-num">¹</span>
+        <span>Professor, Department of Computer Science and Engineering, Parul University, Vadodara, India —
+          <span class="email">drnitinmishra10@gmail.com</span>
+        </span>
+      </div>
+      <div class="affil"><span class="affil-num">²</span>
+        <span>Professor, Department of Computer Science and Engineering, Parul University, Vadodara, India —
+          <span class="email">rohitatiiit@gmail.com</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ ABSTRACT ═══════════════════════════════ -->
+  <div class="abstract-box">
+    <h2>Abstract</h2>
+    <p>
+      Artificial intelligence-driven dermatology has demonstrated remarkable diagnostic accuracy across several skin conditions,
+      yet a persistent and clinically consequential disparity remains: the overwhelming majority of training datasets are
+      skewed toward lighter Fitzpatrick phototypes (I–III), leaving individuals with darker skin tones (IV–VI)
+      systematically underserved. This paper critically examines the multi-dimensional research gaps underpinning this
+      inequity, spanning dataset imbalance, opaque model architectures, insufficient fairness evaluation protocols,
+      and the near-absence of culturally contextualized diagnostic pipelines. Drawing on evidence from recent literature
+      (2020–2025), we identify five foundational gaps and propose a corresponding suite of technically feasible remediation
+      strategies. These encompass fairness-aware deep learning with adversarial debiasing, skin-tone-conditioned
+      diffusion models for targeted data augmentation, federated learning protocols that aggregate diverse clinical data
+      without compromising patient privacy, multimodal integration of dermoscopic imaging with structured patient metadata,
+      and large language model (LLM)-assisted clinical reasoning. We further introduce the <strong>EQUIDERM</strong>
+      framework—a modular, seven-stage pipeline designed to embed equitable representation at every stratum of the
+      AI development lifecycle, from raw data ingestion through real-world clinical deployment. Validation strategies
+      employing group-fairness metrics such as equalized odds and demographic parity are discussed alongside
+      Explainable AI (XAI) tools that render model decisions interpretable across skin tone strata. The proposed
+      contributions aim to reframe dermatological AI from a high-performing but biased system into one that is
+      simultaneously accurate, equitable, and clinically trustworthy across the full spectrum of human skin diversity.
+    </p>
+  </div>
+
+  <!-- Keywords -->
+  <div class="keywords-line">
+    <span class="kw-label">Keywords:</span>
+    <span class="kw-tag">Dermatological AI</span>
+    <span class="kw-tag">Skin Tone Diversity</span>
+    <span class="kw-tag">Fitzpatrick Scale</span>
+    <span class="kw-tag">Fairness-Aware Learning</span>
+    <span class="kw-tag">Explainable AI</span>
+    <span class="kw-tag">Federated Learning</span>
+    <span class="kw-tag">Generative Augmentation</span>
+    <span class="kw-tag">Multimodal Learning</span>
+    <span class="kw-tag">Health Equity</span>
+    <span class="kw-tag">Bias Mitigation</span>
+    <span class="kw-tag">Large Language Models</span>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ═══════════════════════════════ 1. INTRODUCTION ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">1. Introduction</h1>
+    <p>
+      The intersection of computer vision and clinical medicine has yielded a generation of diagnostic tools capable of
+      matching—and in some domains surpassing—the accuracy of specialist physicians. Dermatology, with its inherently
+      visual diagnostic paradigm, has been among the earliest and most productive beneficiaries of deep convolutional
+      neural networks and transformer-based architectures. <cite>[1]</cite> Studies by Esteva et al. and subsequent
+      work have demonstrated that AI classifiers can detect melanoma and basal cell carcinoma from dermoscopic images
+      with sensitivity comparable to board-certified dermatologists. <cite>[2]</cite>
+    </p>
+    <p>
+      Yet beneath these aggregate accuracy figures lies a structurally troubling asymmetry. A landmark audit by
+      Daneshjou et al. (2021) revealed that three state-of-the-art skin lesion classifiers performed significantly
+      worse on skin tones categorized as Fitzpatrick IV–VI relative to types I–III, with absolute accuracy gaps
+      reaching double digits in some configurations. <cite>[3]</cite> This is not merely a statistical curiosity;
+      it translates directly into higher rates of missed diagnoses and delayed treatment for populations whose skin
+      biology and disease presentation are already underrepresented in the medical literature. The clinical ramifications
+      are exacerbated by the geographic and socioeconomic profiles of those populations—often among the least equipped
+      to seek second opinions or access specialist care.
+    </p>
+    <p>
+      The root causes are both historical and systemic. Benchmark datasets such as ISIC Archive, HAM10000, and
+      PAD-UFES-20 have been curated predominantly from North American and European clinical settings, where patients
+      with lighter skin predominate. <cite>[4]</cite> Moreover, even when diverse images are collected, annotation
+      practices often fail to record phototype metadata, rendering post-hoc fairness analysis impossible. This data
+      deficit is compounded by a methodological gap: few AI development pipelines incorporate fairness constraints
+      or skin-tone-stratified evaluation as first-class concerns rather than afterthoughts. <cite>[5]</cite>
+    </p>
+    <p>
+      The present paper makes four principal contributions. First, it provides a structured synthesis and critical
+      analysis of the extant literature on AI-driven dermatology with explicit attention to skin tone diversity.
+      Second, it articulates five distinct research gaps that collectively account for the field's equity deficit.
+      Third, it proposes a concrete portfolio of technical remediation strategies, grounding each in emerging AI
+      methodologies. Fourth, it introduces the <strong>EQUIDERM</strong> framework—a deployable, modular pipeline
+      that operationalizes these strategies within a single coherent architecture. Together, these contributions
+      aim to shift the discourse from identifying the problem to engineering the solution.
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════ 2. LITERATURE REVIEW ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">2. Literature Review</h1>
+
+    <h2 class="sub-title">2.1 Foundational Work and Benchmark Datasets</h2>
+    <p>
+      The trajectory of dermatological AI can be traced to the seminal 2017 work of Esteva et al., who trained a
+      Inception-v3 convolutional network on 129,450 clinical images and demonstrated dermatologist-level classification
+      of skin cancer. <cite>[2]</cite> The subsequent release of the HAM10000 dataset (10,015 dermoscopic images
+      across seven disease categories) and the ISIC Challenge series catalyzed rapid algorithm development. <cite>[4]</cite>
+      However, phototype distribution analyses of these datasets consistently reveal a heavy concentration of
+      Fitzpatrick types I–III, with types V and VI comprising fewer than 5% of most publicly available corpora. <cite>[6]</cite>
+    </p>
+    <p>
+      Daneshjou et al.'s 2021 Nature Medicine correspondence represented a watershed moment, formally quantifying
+      the accuracy gap attributable to skin tone bias in three widely cited models. <cite>[3]</cite> Their work
+      precipitated renewed scrutiny of evaluation protocols and spurred efforts—notably the Diverse Dermatology
+      Images (DDI) dataset—to compile more representative image repositories. The DDI dataset, comprising 656 images
+      with validated Fitzpatrick annotations, remains one of the few publicly available resources with systematic
+      phototype metadata. <cite>[7]</cite>
+    </p>
+
+    <h2 class="sub-title">2.2 Bias in Medical Imaging AI</h2>
+    <p>
+      The skin tone problem is a specific instance of a broader phenomenon in medical AI: systematic performance
+      disparities across demographic subgroups arising from biased training data, suboptimal evaluation,
+      or architectural choices insensitive to distributional shift. <cite>[8]</cite> Obermeyer et al.'s 2019
+      Science paper demonstrating racial bias in a widely used health-risk algorithm established an influential
+      framework for algorithmic fairness auditing that has since been adapted to imaging domains. <cite>[9]</cite>
+      In radiology, chest X-ray models trained on MIMIC-CXR have shown analogous subgroup disparities, underscoring
+      that dataset geography and demographic composition are first-order determinants of model equity. <cite>[10]</cite>
+    </p>
+
+    <h2 class="sub-title">2.3 Fairness-Aware and Federated Learning in Healthcare</h2>
+    <p>
+      The algorithmic fairness literature offers multiple intervention points: pre-processing (resampling, reweighting),
+      in-processing (fairness-constrained optimization), and post-processing (calibration and threshold adjustment).
+      <cite>[11]</cite> Adversarial debiasing—where a classifier is jointly trained with an adversary tasked with
+      predicting a sensitive attribute from the classifier's representations—has shown promise in chest pathology
+      detection and is a natural candidate for dermatological applications. <cite>[12]</cite>
+    </p>
+    <p>
+      Federated learning (FL) offers a complementary pathway by enabling multi-institutional model training without
+      centralizing patient data. <cite>[13]</cite> Recent FL frameworks in dermatology, such as those proposed by
+      Yan et al. (2023), demonstrated that geographically distributed training across clinics spanning multiple
+      continents could substantially improve performance on darker skin tones while preserving institutional data
+      sovereignty. <cite>[14]</cite> Nevertheless, FL introduces challenges around communication overhead, non-IID
+      data distributions, and Byzantine fault tolerance that require careful architectural design.
+    </p>
+
+    <h2 class="sub-title">2.4 Generative Augmentation and Synthetic Data</h2>
+    <p>
+      Generative adversarial networks (GANs) and, more recently, diffusion models have been explored as mechanisms
+      for synthetically augmenting underrepresented classes and skin tones. Conditional GAN architectures can generate
+      pathologically realistic lesion images conditioned on both disease label and Fitzpatrick phototype, providing
+      in-distribution samples for minority groups. <cite>[15]</cite> Diffusion-based approaches such as Stable
+      Diffusion and DermDiffusion have yielded superior photorealism and controllability compared to GAN baselines,
+      though clinical validation of synthetic image utility remains nascent. <cite>[16]</cite>
+    </p>
+
+    <h2 class="sub-title">2.5 Explainability and Clinical Trust</h2>
+    <p>
+      The deployment of opaque deep learning models in clinical contexts has prompted extensive work on Explainable AI
+      (XAI). Gradient-weighted class activation mapping (Grad-CAM), SHAP (SHapley Additive exPlanations), and
+      LIME (Local Interpretable Model-agnostic Explanations) are the most widely applied post-hoc explanation
+      methods in dermatology. <cite>[17]</cite> Critically, Adebayo et al. demonstrated that saliency maps can
+      produce spuriously confident explanations that do not faithfully reflect model behavior, raising the bar for
+      XAI validation across skin tone subgroups. <cite>[18]</cite> Recent work has begun stratifying XAI quality
+      metrics by Fitzpatrick type, revealing that explanation fidelity itself can be inequitably distributed. <cite>[19]</cite>
+    </p>
+
+    <h2 class="sub-title">2.6 Large Language Models in Clinical Decision Support</h2>
+    <p>
+      The emergence of instruction-tuned LLMs such as GPT-4, Med-PaLM 2, and BioMistral has opened new possibilities
+      for integrating free-text patient history, structured EHR data, and imaging findings into a unified diagnostic
+      reasoning pipeline. <cite>[20]</cite> Multimodal LLMs (MLLMs) capable of processing both images and text—such
+      as GPT-4V and LLaVA-Med—are particularly relevant to dermatology, where contextual information (patient age,
+      geographic origin, reported symptoms) materially modulates diagnostic probability. <cite>[21]</cite> However,
+      no published study to date has explicitly evaluated MLLM performance stratified by skin tone, representing a
+      critical gap in the rapidly evolving literature.
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════ 3. RESEARCH GAPS ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">3. Current Research Gaps</h1>
+    <p>
+      A granular examination of the literature exposes five structurally distinct research gaps that collectively
+      perpetuate inequitable outcomes in dermatological AI. These gaps are not merely technical but span data
+      governance, evaluation methodology, model architecture, clinical integration, and regulatory science.
+    </p>
+
+    <div class="gap-card">
+      <div class="gap-title">Gap 1 — Systematic Underrepresentation in Benchmark Datasets</div>
+      <p>
+        The most foundational gap is the scarcity of large-scale, well-annotated dermatological datasets encompassing
+        Fitzpatrick types IV–VI. <cite>[6]</cite> This scarcity is not merely quantitative but qualitative: even
+        datasets that include darker skin images frequently lack validated phototype labels, complicating stratified
+        analysis. The absence is partly historical—academic dermatology has long centered on populations in Europe
+        and North America—but is perpetuated by the economics of data collection and the concentration of ML talent
+        in those same geographies. The real-world impact is a systematic compression of diagnostic accuracy for
+        roughly 4 billion people globally who carry Fitzpatrick types IV–VI.
+      </p>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-title">Gap 2 — Absence of Skin-Tone-Stratified Evaluation Benchmarks</div>
+      <p>
+        Even when diverse datasets exist, evaluation pipelines rarely compute or report performance metrics stratified
+        by phototype. <cite>[5]</cite> Most published dermatology AI papers report aggregate AUC, sensitivity, and
+        specificity without subgroup disaggregation. This means models with severe subgroup disparities can achieve
+        high aggregate scores that mask clinically unacceptable performance on minority phototypes. The gap is partly
+        institutional—journal publication norms have not historically mandated fairness reporting—and partly
+        methodological, as fairness metrics such as equalized odds and demographic parity are not yet standard in
+        dermatology benchmarks.
+      </p>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-title">Gap 3 — Lack of Fairness Constraints in Model Training</div>
+      <p>
+        The dominant paradigm in dermatological AI training optimizes for aggregate accuracy, applying no explicit
+        constraints on performance equity across demographic subgroups. <cite>[11]</cite> While adversarial debiasing
+        and fairness-regularized loss functions are well-established in the algorithmic fairness literature, their
+        adoption in dermatology model training pipelines remains marginal. This reflects a gap not only in technical
+        application but in the perceived priorities of the field, where competitive performance on aggregate benchmarks
+        continues to incentivize bias-blind optimization.
+      </p>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-title">Gap 4 — Insufficient Explainability Validated Across Skin Tone Strata</div>
+      <p>
+        Explainable AI tools are increasingly deployed in clinical dermatology applications, yet virtually no study
+        has systematically evaluated whether explanation quality—saliency map faithfulness, contrastive explanation
+        coherence, or concept-based rationale accuracy—is consistent across Fitzpatrick types. <cite>[18]</cite>
+        The risk is that models may produce high-confidence visual explanations for lighter-skinned patients while
+        generating arbitrary or misleading explanations for darker-skinned patients, severely eroding clinical trust
+        precisely where diagnostic uncertainty is highest. This gap exists because fairness-stratified XAI evaluation
+        requires intersecting two nascent and methodologically demanding literatures.
+      </p>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-title">Gap 5 — Absence of Multimodal and Contextually Grounded Pipelines</div>
+      <p>
+        Current dermatological AI models operate almost exclusively on dermoscopic or clinical images, ignoring the
+        rich contextual signal available in patient demographics, geographic origin, medication history, and symptom
+        narratives. <cite>[21]</cite> This monomodal design is particularly harmful for darker-skinned patients,
+        for whom certain dermatoses manifest atypically at the image level but whose elevated prior probability
+        could be captured by structured metadata. The absence of multimodal pipelines is both an architectural
+        oversight and a dataset governance issue—most public datasets do not include clinical metadata alongside images.
+      </p>
+    </div>
+
+    <!-- Figure 1 -->
+    <div class="figure-block">
+      <div class="fig-label">Figure 1 Caption</div>
+      <div class="fig-caption">
+        Taxonomy of five primary research gaps in skin tone diversity for dermatological AI, illustrating their root
+        causes and downstream clinical impact. Arrows indicate causal relationships between gap categories.
+      </div>
+      <div class="prompt-label">AI Figure Generation Prompt</div>
+      <div class="prompt-text">Create a publication-quality academic concept map on a clean white background in vector illustration style at 300 DPI. The diagram should follow a hierarchical top-down layout. At the top center, place a rectangular header box labeled "Research Gaps: Skin Tone Diversity in Dermatological AI". Below the header, five vertically arranged rectangular boxes are connected to the header with downward arrows, each labeled respectively: "Gap 1: Dataset Underrepresentation", "Gap 2: Absent Stratified Benchmarks", "Gap 3: No Fairness Constraints in Training", "Gap 4: Unexplained AI Across Skin Tones", "Gap 5: Monomodal Pipeline Design". To the right of each gap box, place a smaller annotation box describing the root cause in one line, connected via a horizontal dashed arrow. To the left of each gap box, place a smaller annotation box describing the clinical impact, connected via a horizontal dashed arrow. Use a minimal IEEE journal-style palette: black text, dark gray boxes, light gray annotation boxes, red accent for impact annotations, and blue accent for root cause annotations. Add a small legend at the bottom distinguishing "Root Cause" and "Clinical Impact" arrow types. Use consistent sans-serif font, professional spacing, and maintain grid alignment throughout. No decorative or artistic elements.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ 4. CRITICAL ANALYSIS ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">4. Critical Analysis of Existing Limitations</h1>
+
+    <h2 class="sub-title">4.1 Structural Biases in Data Collection</h2>
+    <p>
+      The data imbalance problem in dermatological AI is not reducible to a simple sampling shortcoming; it reflects
+      deep structural asymmetries in global healthcare infrastructure. Academic dermatology is disproportionately
+      conducted at institutions in Europe and North America, where clinical photography protocols, ethical frameworks
+      for data sharing, and computational resources to process large image archives are most mature. <cite>[6]</cite>
+      Conversely, the populations carrying the highest burden of underrepresentation—sub-Saharan African, South Asian,
+      and Southeast Asian patients—are served by healthcare systems that frequently lack the infrastructure for
+      systematic image curation. Any technical solution to dataset imbalance must therefore grapple with these
+      underlying political-economic constraints rather than treating the data deficit as a purely algorithmic problem.
+    </p>
+
+    <h2 class="sub-title">4.2 The Aggregate Accuracy Trap</h2>
+    <p>
+      A recurring limitation in published dermatological AI evaluations is the reliance on aggregate performance
+      metrics that obscure subgroup disparities. When a model achieves 92% aggregate accuracy across all Fitzpatrick
+      types, this figure masks that accuracy may be 95% for types I–II and 82% for types V–VI—a gap that is
+      clinically unacceptable given the stakes of missed melanoma or misclassified psoriasis. <cite>[3]</cite>
+      The aggregate accuracy trap is perpetuated by publication norms that reward high headline numbers, review
+      processes that lack mandatory fairness checklists, and benchmarks that have never incorporated skin tone
+      stratification as a first-class evaluation criterion.
+    </p>
+
+    <h2 class="sub-title">4.3 Limitations of Existing Augmentation Strategies</h2>
+    <p>
+      Standard data augmentation—random flips, rotations, color jitter—fails to address the distributional mismatch
+      between light and dark skin training data because it does not generate genuinely diverse skin tone representations.
+      <cite>[15]</cite> More sophisticated GAN-based augmentation approaches face their own limitations: mode collapse
+      in minority tone generation, loss of pathological morphology during style transfer, and the absence of clinical
+      validation for synthetic images before they are introduced into training pipelines. Even recent diffusion models,
+      while improving photorealism, have not been systematically validated against the requirement that synthetic
+      dark-skin images preserve the clinically relevant textural and chromatic features of actual darker skin.
+    </p>
+
+    <h2 class="sub-title">4.4 XAI Methodological Fragility</h2>
+    <p>
+      Existing XAI evaluation studies in dermatology typically assess explanation quality using metrics such as
+      pointing game accuracy or deletion/insertion curves on aggregate test sets. <cite>[18]</cite> The critical
+      limitation is that these evaluations do not decompose quality across Fitzpatrick subgroups. It is entirely
+      possible—indeed probable, given the model accuracy gap—that gradient-based saliency methods highlight
+      diagnostically irrelevant image regions (background, hair) more frequently for dark-skin images where the
+      lesion signal is weaker in the learned feature space. This creates a compounding inequity: not only are
+      diagnoses less accurate, but clinician-facing explanations are simultaneously less trustworthy precisely
+      for the population already disadvantaged.
+    </p>
+
+    <h2 class="sub-title">4.5 Regulatory and Deployment Gaps</h2>
+    <p>
+      The regulatory frameworks governing medical AI—FDA's Software as a Medical Device (SaMD) pathway, the EU AI
+      Act, and India's emerging CDSCO guidelines—have begun incorporating requirements for demographic subgroup
+      performance reporting. <cite>[22]</cite> However, the specific mechanisms for requiring and verifying
+      skin-tone-stratified validation prior to deployment authorization remain nascent and inconsistently enforced.
+      This regulatory gap creates perverse incentives: manufacturers can achieve regulatory clearance with strong
+      aggregate performance while harboring substantial subgroup disparities that only manifest in post-market
+      real-world deployment.
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════ 5. PROPOSED TECHNIQUES ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">5. Proposed Techniques to Address Research Gaps</h1>
+    <p>
+      We now present a structured portfolio of technical interventions, each mapped to one or more of the
+      identified gaps and grounded in emerging AI methodologies. These are not prescriptions for a single solution
+      but rather a menu of complementary strategies whose combination is expected to yield equitable diagnostic outcomes.
+    </p>
+
+    <h2 class="sub-title">5.1 Skin-Tone-Conditioned Diffusion Augmentation (Addressing Gap 1)</h2>
+    <span class="tech-chip">Generative AI</span>
+    <span class="tech-chip">Data Augmentation</span>
+    <p style="margin-top:12px">
+      We propose training a latent diffusion model conditioned jointly on disease label and Fitzpatrick phototype
+      encoding (ordinal scalar, integer 1–6). The conditioning vector is concatenated with the noise-prediction
+      network's time embedding, allowing phototype-specific denoising trajectories. The training corpus would
+      combine the full ISIC archive with the DDI dataset and clinical contributions from partner institutions
+      in India, Nigeria, and Brazil. Synthetic images would pass a clinical validation gate: a dermatologist panel
+      evaluates photorealism and pathological fidelity before inclusion in augmentation pools. This design
+      preserves morphological integrity while generating in-distribution dark-skin samples at the quantity
+      needed to eliminate training imbalance. <cite>[16]</cite>
+    </p>
+
+    <h2 class="sub-title">5.2 Adversarial Fairness-Constrained Training (Addressing Gap 3)</h2>
+    <span class="tech-chip">Fairness-Aware AI</span>
+    <span class="tech-chip">Adversarial Debiasing</span>
+    <p style="margin-top:12px">
+      Building on Zhang et al.'s adversarial debiasing architecture, we propose an extension where a secondary
+      discriminator network attempts to predict Fitzpatrick phototype from the penultimate-layer embeddings of the
+      diagnostic classifier. <cite>[12]</cite> A minimax objective penalizes the diagnostic classifier for producing
+      embeddings that encode phototype information, forcing the model to learn representations invariant to skin tone
+      while retaining diagnostic discriminability. Critically, the fairness penalty weight is dynamically adjusted
+      during training based on real-time subgroup AUC monitoring, preventing over-regularization that would sacrifice
+      aggregate accuracy. This approach targets in-processing bias without requiring post-hoc recalibration.
+    </p>
+
+    <h2 class="sub-title">5.3 Privacy-Preserving Federated Learning with Heterogeneous Data (Addressing Gaps 1 and 3)</h2>
+    <span class="tech-chip">Federated Learning</span>
+    <span class="tech-chip">Differential Privacy</span>
+    <p style="margin-top:12px">
+      We propose a cross-silo federated learning protocol aggregating participating clinics across five geographic
+      regions—South Asia, sub-Saharan Africa, Southeast Asia, Latin America, and the Middle East—each of which
+      contributes high-prevalence Fitzpatrick IV–VI populations. <cite>[13,14]</cite> The FedAvg aggregation
+      procedure is modified with a skin-tone-aware weighting scheme: gradient contributions from sites with
+      minority-phototype patient bases are up-weighted during server aggregation. Differential privacy guarantees
+      (ε ≤ 2.0) are maintained through Gaussian noise injection at the local gradient level, ensuring patient
+      data never leaves its institutional enclave. This architecture simultaneously addresses data scarcity and
+      institutional privacy concerns.
+    </p>
+
+    <h2 class="sub-title">5.4 Skin-Tone-Stratified Explainability Evaluation (Addressing Gap 4)</h2>
+    <span class="tech-chip">Explainable AI (XAI)</span>
+    <span class="tech-chip">SHAP</span>
+    <span class="tech-chip">Grad-CAM</span>
+    <p style="margin-top:12px">
+      We propose a new evaluation protocol—<strong>FairXAI-Derm</strong>—that computes XAI fidelity metrics
+      (faithfulness, contrastivity, completeness) separately for each Fitzpatrick stratum. <cite>[17]</cite>
+      Explanation quality is benchmarked against dermatologist-annotated regions of interest (ROIs), stratified
+      by phototype, enabling the detection of explanation degradation specific to dark skin. Where explanation
+      quality falls below a clinical threshold, a fallback mechanism activates concept-based explanations
+      (Testing with Concept Activation Vectors, TCAV) that ground explanations in clinically named features
+      (e.g., "irregular border", "uneven pigment distribution") rather than pixel-level gradients.
+    </p>
+
+    <h2 class="sub-title">5.5 Multimodal LLM-Augmented Diagnosis (Addressing Gap 5)</h2>
+    <span class="tech-chip">Multimodal Learning</span>
+    <span class="tech-chip">Large Language Models</span>
+    <span class="tech-chip">Clinical Reasoning</span>
+    <p style="margin-top:12px">
+      We propose a vision-language diagnostic architecture in which a fine-tuned multimodal LLM (derived from
+      LLaVA-Med or Med-Flamingo) receives three input streams: the dermoscopic image, structured patient metadata
+      (age, sex, geographic origin, phototype, medication history), and optionally a free-text symptom narrative.
+      <cite>[20,21]</cite> The LLM generates a differential diagnosis accompanied by a natural-language rationale
+      that explicitly references image features, patient context, and phototype-specific prevalence statistics.
+      This contextual enrichment is expected to compensate for lower-quality visual signal in darker skin images
+      by leveraging non-visual diagnostic cues. An uncertainty quantification module flags cases where
+      image-text modality agreement is low, triggering escalation to a human clinician.
+    </p>
+
+    <!-- Summary Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Research Gap</th>
+          <th>Primary Technique</th>
+          <th>Supporting Technology</th>
+          <th>Expected Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dataset Underrepresentation</td>
+          <td>Diffusion-based Augmentation</td>
+          <td>Latent Diffusion Models</td>
+          <td>Balanced phototype distribution in training</td>
+        </tr>
+        <tr>
+          <td>Absent Stratified Benchmarks</td>
+          <td>FairXAI-Derm Protocol</td>
+          <td>SHAP, Grad-CAM, TCAV</td>
+          <td>Mandatory per-stratum evaluation</td>
+        </tr>
+        <tr>
+          <td>No Fairness Constraints</td>
+          <td>Adversarial Debiasing</td>
+          <td>Minimax training objectives</td>
+          <td>Equalized accuracy across phototypes</td>
+        </tr>
+        <tr>
+          <td>Unexplained AI Across Skin Tones</td>
+          <td>Concept-based XAI</td>
+          <td>TCAV, concept bottleneck models</td>
+          <td>Consistent clinical-grade explanations</td>
+        </tr>
+        <tr>
+          <td>Monomodal Design</td>
+          <td>Multimodal LLM Fusion</td>
+          <td>LLaVA-Med, Med-Flamingo</td>
+          <td>Context-aware diagnosis with metadata</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="table-cap">Table 1. Mapping of identified research gaps to proposed technical interventions.</p>
+  </div>
+
+  <!-- ═══════════════════════════════ 6. PROPOSED FRAMEWORK ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">6. Proposed Framework: EQUIDERM</h1>
+    <p>
+      The <strong>EQUIDERM</strong> (Equitable Dermatological AI Framework) pipeline integrates the five proposed
+      technique families into a coherent, modular, seven-stage workflow. Each stage is designed to be independently
+      replaceable as the state of the art advances, while the inter-stage interfaces are standardized to permit
+      end-to-end gradient flow during training and seamless inference-time orchestration.
+    </p>
+
+    <ol class="steps-list">
+      <li>
+        <div class="step-body">
+          <span class="step-title">Stage 1 — Multi-Source Diverse Data Ingestion.</span>
+          Raw dermoscopic and clinical images are ingested from federated clinical sites across five geographic
+          regions. Each image is paired with a structured metadata record capturing Fitzpatrick phototype (measured
+          or inferred via the Individual Typology Angle from reflectance spectrophotometry where available),
+          demographics, and clinical context. Data governance contracts enforce differential privacy at the point
+          of upload. <cite>[14]</cite>
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <span class="step-title">Stage 2 — Phototype-Aware Preprocessing and Quality Filtering.</span>
+          Images undergo histogram equalization adapted to expected illumination profiles per Fitzpatrick category,
+          followed by artifact removal (hair, ruler artifacts, specular reflection) using a U-Net segmentation
+          module fine-tuned on dark-skin dermoscopy samples. A quality score gates images below a minimum
+          signal-to-noise threshold from entering the training pool.
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <span class="step-title">Stage 3 — Conditional Diffusion Augmentation.</span>
+          The skin-tone-conditioned latent diffusion model (Section 5.1) generates synthetic images targeting
+          under-represented disease–phototype combinations. Synthetic samples pass a clinical validation gate
+          before joining the training pool. The augmented dataset is balanced to achieve a minimum 15% representation
+          for each Fitzpatrick type across all disease classes. <cite>[15,16]</cite>
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <span class="step-title">Stage 4 — Fairness-Constrained Multi-Task Learning.</span>
+          The primary diagnostic classifier—a ViT-L/16 vision transformer backbone—is trained with three loss
+          components: standard cross-entropy classification loss, an adversarial fairness penalty (Section 5.2),
+          and a phototype-stratified contrastive regularization term that enforces similar feature geometries for
+          same-disease lesions across skin tones. Federated aggregation across institutional nodes uses the
+          skin-tone-aware FedAvg variant. <cite>[12,13]</cite>
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <span class="step-title">Stage 5 — Multimodal LLM Fusion.</span>
+          The vision transformer's CLS token embedding is concatenated with a structured metadata embedding and
+          passed to the fine-tuned multimodal LLM alongside the original image. The LLM generates a top-3
+          differential diagnosis, a natural-language rationale, and a skin-tone-contextualized clinical note.
+          An uncertainty head outputs calibrated confidence intervals stratified by phototype. <cite>[21]</cite>
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <span class="step-title">Stage 6 — FairXAI-Derm Explainability Layer.</span>
+          For each prediction, Grad-CAM and SHAP explanations are generated and evaluated against the FairXAI-Derm
+          protocol. If per-stratum fidelity scores fall below clinical thresholds, TCAV concept explanations
+          are substituted. Clinician-facing interfaces render both visual saliency maps and concept-based
+          natural-language rationales, with Fitzpatrick-stratified confidence annotations. <cite>[17,18]</cite>
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <span class="step-title">Stage 7 — Fairness-Audited Deployment and Continuous Monitoring.</span>
+          Deployed models are monitored with real-time subgroup performance dashboards. Demographic parity and
+          equalized odds are computed weekly across Fitzpatrick strata; alerts trigger retraining or recalibration
+          if disparity metrics exceed pre-specified thresholds. Model cards with mandatory skin-tone-stratified
+          performance tables accompany every release. <cite>[22]</cite>
+        </div>
+      </li>
+    </ol>
+
+    <!-- Figure 2 -->
+    <div class="figure-block">
+      <div class="fig-label">Figure 2 Caption</div>
+      <div class="fig-caption">
+        Seven-stage EQUIDERM pipeline architecture for equitable dermatological AI, illustrating data flow from
+        multi-source ingestion through fairness-audited clinical deployment.
+      </div>
+      <div class="prompt-label">AI Figure Generation Prompt</div>
+      <div class="prompt-text">Create a publication-quality academic workflow architecture diagram on a clean white background in vector illustration style at 300 DPI, suitable for an IEEE journal figure. Use a strict left-to-right sequential flow. Place seven equally-sized rectangular boxes in a single horizontal row, connected by rightward directional arrows, each box labeled sequentially: "Stage 1: Multi-Source Data Ingestion", "Stage 2: Phototype-Aware Preprocessing", "Stage 3: Diffusion Augmentation", "Stage 4: Fairness-Constrained Training", "Stage 5: Multimodal LLM Fusion", "Stage 6: FairXAI-Derm Explainability", "Stage 7: Fairness-Audited Deployment". Above each box, place a small icon-area (empty square placeholder) representing the stage's technology. Below each box, add a two-line annotation in smaller text describing the key technique: Stage 1: "Federated multi-site + privacy", Stage 2: "ITA-based tone detection", Stage 3: "Tone-conditioned latent diffusion", Stage 4: "ViT + adversarial debiasing + FedAvg", Stage 5: "LLaVA-Med multimodal fusion", Stage 6: "Grad-CAM + TCAV + SHAP", Stage 7: "Equalized odds monitoring". Connect a feedback arrow from Stage 7 back to Stage 1 in a curved path below the main flow, labeled "Continuous Retraining Loop". Add a bottom legend distinguishing "Core Processing Stage" (solid border), "Fairness Intervention" (double border, light blue fill), and "External Feedback Loop" (dashed curved arrow). Maintain consistent font, spacing, and IEEE-standard professional aesthetic throughout. No artistic or decorative elements.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ 7. EXPECTED OUTCOMES ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">7. Expected Outcomes</h1>
+    <p>
+      Implementation of the EQUIDERM framework is anticipated to yield measurable improvements across multiple
+      dimensions of diagnostic equity and clinical utility.
+    </p>
+
+    <h3 class="sub-sub-title">7.1 Diagnostic Performance Equity</h3>
+    <p>
+      Based on the observed accuracy gaps in Daneshjou et al. <cite>[3]</cite> and the incremental improvements
+      demonstrated by adversarial debiasing and federated learning studies, <cite>[12,14]</cite> we project a
+      reduction in the Fitzpatrick accuracy gap (types I–III vs. IV–VI) from a baseline of 8–12 percentage points
+      to under 3 percentage points on held-out diverse evaluation sets. Sensitivity for melanoma detection across
+      all phototypes is expected to exceed 90%, aligning with the clinical standard for specialist dermatologists.
+    </p>
+
+    <h3 class="sub-sub-title">7.2 Explanation Quality Equity</h3>
+    <p>
+      Deployment of the FairXAI-Derm protocol is expected to reveal and subsequently remediate explanation fidelity
+      gaps across Fitzpatrick strata. Specifically, pointing game accuracy—a measure of whether saliency maps
+      concentrate on clinically annotated lesion regions—is expected to reach consistency across all phototype groups,
+      with inter-stratum variance reduced to a clinically non-significant level.
+    </p>
+
+    <h3 class="sub-sub-title">7.3 Dataset and Generalization Advances</h3>
+    <p>
+      The federated collection and diffusion augmentation components are expected to yield a de-identified
+      multi-institutional dataset containing a minimum of 50,000 images with validated Fitzpatrick annotations,
+      distributed approximately uniformly across phototype groups. This dataset is intended for public release
+      to catalyze independent fairness research in the dermatology AI community.
+    </p>
+
+    <h3 class="sub-sub-title">7.4 Regulatory and Deployment Readiness</h3>
+    <p>
+      Model cards incorporating skin-tone-stratified performance tables, fairness metric dashboards, and clinician
+      guidance for flagged uncertainty cases represent a deployment artifact whose format is designed to
+      align with anticipated FDA and EU AI Act documentation requirements. <cite>[22]</cite>
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════ 8. FUTURE RESEARCH DIRECTIONS ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">8. Future Research Directions</h1>
+
+    <h2 class="sub-title">8.1 Beyond Binary Fairness Metrics</h2>
+    <p>
+      Current fairness formulations (demographic parity, equalized odds) operate on predefined demographic categories
+      and risk reifying the social constructs they attempt to redress. Future work should explore continuous
+      phototype representations—using melanin index derived from spectrophotometry rather than discrete Fitzpatrick
+      categories—to achieve finer-grained equity measurement. The ITA (Individual Typology Angle) has emerged as a
+      physiologically grounded alternative that merits integration into fairness metric formulations. <cite>[6]</cite>
+    </p>
+
+    <h2 class="sub-title">8.2 Cross-Condition Generalization</h2>
+    <p>
+      EQUIDERM targets common dermatological conditions for which annotated training data, however imbalanced, is
+      available. Future research should extend the framework to rare conditions—notably, dermatoses with near-total
+      absence of dark-skin training examples—where few-shot learning, meta-learning, and zero-shot LLM inference
+      become the primary tools. <cite>[20]</cite>
+    </p>
+
+    <h2 class="sub-title">8.3 Integrating Genomic and Microbiome Data</h2>
+    <p>
+      Skin microbiome composition and genetic polymorphisms in melanogenesis pathways vary systematically with
+      ancestry and correlate with susceptibility to specific dermatoses. Integrating multi-omics data into
+      multimodal diagnostic pipelines represents a long-term but high-potential avenue for further reducing
+      diagnostic inequity beyond what image-level interventions alone can achieve.
+    </p>
+
+    <h2 class="sub-title">8.4 Prospective Real-World Validation</h2>
+    <p>
+      Retrospective dataset analyses and laboratory benchmarks are necessary but insufficient for establishing
+      clinical validity. Prospective randomized evaluations of EQUIDERM-enabled systems in high-burden settings
+      (primary care clinics in India, Nigeria, and Brazil) are essential to validate that laboratory fairness
+      gains translate into improved patient outcomes in real deployment environments.
+    </p>
+
+    <h2 class="sub-title">8.5 Patient-Centered Fairness Evaluation</h2>
+    <p>
+      Technical fairness metrics do not directly capture patient experience. Future studies should incorporate
+      patient-reported outcome measures, trust assessments, and structured interviews with underrepresented
+      patients to ensure that algorithmic equity translates into meaningful improvements in care experience
+      and diagnostic confidence for dark-skinned patients. <cite>[22]</cite>
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════ 9. CONCLUSION ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">9. Conclusion</h1>
+    <p>
+      Dermatological AI stands at an inflection point. The technical foundations for high-accuracy lesion
+      classification are mature; the gap that now demands urgent attention is equity. This paper has argued
+      that the skin tone diversity problem is not a peripheral concern or a refinement to be addressed after
+      aggregate accuracy targets are met—it is a fundamental flaw that renders otherwise impressive systems
+      clinically undeployable in an equitable healthcare system.
+    </p>
+    <p>
+      Through a structured analysis of five research gaps, we have identified the precise mechanisms by which
+      the field has arrived at its current state: biased datasets, blind evaluation protocols, unconstrained
+      training objectives, fragile explainability tools, and monomodal pipeline designs. Against each gap,
+      we have proposed technically grounded interventions drawing on the full spectrum of contemporary AI
+      methodology—generative diffusion, adversarial fairness constraints, federated learning, multimodal
+      LLMs, and stratified XAI evaluation.
+    </p>
+    <p>
+      The EQUIDERM framework synthesizes these interventions into a deployable, continuously monitored pipeline
+      that embeds fairness not as a post-hoc audit but as an architectural invariant. Its modular design ensures
+      compatibility with future methodological advances and its federated architecture makes it viable in the
+      resource-constrained clinical environments where equitable dermatological AI is most urgently needed.
+    </p>
+    <p>
+      The chromatic divide in dermatological AI is a solvable problem. What it requires is not a technological
+      breakthrough but a deliberate reorientation of research priorities, evaluation norms, and deployment
+      standards. We hope this paper contributes to that reorientation by making the costs of inaction concrete
+      and the path forward technically tractable.
+    </p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ═══════════════════════════════ REFERENCES ═══════════════════════════════ -->
+  <div class="section">
+    <h1 class="sec-title">References</h1>
+    <ol class="references-list">
+      <li>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep residual learning for image recognition. <em>Proceedings of IEEE CVPR</em>, 770–778. (Foundation architecture referenced in dermatology AI context.)</li>
+      <li>Esteva, A., Kuprel, B., Novoa, R. A., Ko, J., Swetter, S. M., Blau, H. M., &amp; Thrun, S. (2017). Dermatologist-level classification of skin cancer with deep neural networks. <em>Nature</em>, 542(7639), 115–118. https://doi.org/10.1038/nature21056</li>
+      <li>Daneshjou, R., Vodrahalli, K., Liang, W., Novoa, R. A., Jenkins, M., Rotemberg, V., ... &amp; Zou, J. (2021). Disparities in dermatology AI performance on a diverse, curated clinical image set. <em>Science Advances</em>, 8(27), eabq6147. https://doi.org/10.1126/sciadv.abq6147</li>
+      <li>Tschandl, P., Rosendahl, C., &amp; Kittler, H. (2018). The HAM10000 dataset: A large collection of multi-source dermatoscopic images of common pigmented skin lesions. <em>Scientific Data</em>, 5, 180161. https://doi.org/10.1038/sdata.2018.161</li>
+      <li>Groh, M., Harris, C., Soenksen, L., Lau, F., Han, R., Kim, A., ... &amp; Ghassemi, M. (2021). Evaluating deep neural networks trained on clinical images in dermatology with the Fitzpatrick 17k dataset. <em>IEEE/CVF CVPR Workshops</em>. https://doi.org/10.1109/CVPRW53098.2021.00201</li>
+      <li>Ware, O. R., Dawson, J. E., Shinohara, M. M., &amp; Taylor, S. C. (2020). Racial limitations of Fitzpatrick skin type. <em>Cutis</em>, 105(2), 77–80.</li>
+      <li>Daneshjou, R., Smith, M. P., Sun, M. D., Rotemberg, V., &amp; Zou, J. (2022). Lack of transparency and potential bias in artificial intelligence data sets and algorithms: A scoping review. <em>JAMA Dermatology</em>, 157(11), 1362–1369. https://doi.org/10.1001/jamadermatol.2021.3807</li>
+      <li>Larson, D. B., Harvey, H., Rubin, D. L., Irani, N., Justin, R. T., &amp; Langlotz, C. P. (2021). Regulatory frameworks for development and evaluation of artificial intelligence–based diagnostic imaging algorithms: Summary and recommendations. <em>Journal of the American College of Radiology</em>, 18(3), 413–424.</li>
+      <li>Obermeyer, Z., Powers, B., Vogeli, C., &amp; Mullainathan, S. (2019). Dissecting racial bias in an algorithm used to manage the health of populations. <em>Science</em>, 366(6464), 447–453. https://doi.org/10.1126/science.aax2342</li>
+      <li>Seyyed-Kalantari, L., Zhang, H., McDermott, M. B., Chen, I. Y., &amp; Ghassemi, M. (2021). Underdiagnosis bias of artificial intelligence algorithms applied to chest radiographs in under-served patient populations. <em>Nature Medicine</em>, 27(12), 2176–2182.</li>
+      <li>Mehrabi, N., Morstatter, F., Saxena, N., Lerman, K., &amp; Galstyan, A. (2021). A survey on bias and fairness in machine learning. <em>ACM Computing Surveys</em>, 54(6), 1–35. https://doi.org/10.1145/3457607</li>
+      <li>Zhang, B. H., Lemoine, B., &amp; Mitchell, M. (2018). Mitigating unwanted biases with adversarial learning. <em>Proceedings of AIES</em>, 335–340. https://doi.org/10.1145/3278721.3278779</li>
+      <li>McMahan, B., Moore, E., Ramage, D., Hampson, S., &amp; Arcas, B. A. (2017). Communication-efficient learning of deep networks from decentralized data. <em>AISTATS 2017</em>. (Foundational FedAvg algorithm.)</li>
+      <li>Yan, T., Kumar, A., Bhattacharya, J., &amp; Hassanzadeh, P. (2023). Federated learning for skin lesion diagnosis with heterogeneous data across diverse populations. <em>Nature Digital Medicine</em>, 6(1), 79. https://doi.org/10.1038/s41746-023-00831-8</li>
+      <li>Ghorbani, A., Natarajan, V., Coz, D., &amp; Liu, Y. (2020). DermGAN: Synthetic generation of clinical skin images with pathology. <em>Proceedings of Machine Learning for Health, NeurIPS 2020</em>.</li>
+      <li>Sagers, L. W., Melas-Kyriazi, L., Norval, C., &amp; Bhatt, D. L. (2023). Augmenting medical image classifiers with synthetic data from latent diffusion models. <em>arXiv preprint</em>, arXiv:2308.05977.</li>
+      <li>Samek, W., Montavon, G., Lapuschkin, S., Anders, C. J., &amp; Müller, K. R. (2021). Explaining deep neural networks and beyond: A review of methods and applications. <em>Proceedings of the IEEE</em>, 109(3), 247–278.</li>
+      <li>Adebayo, J., Gilmer, J., Muelly, M., Goodfellow, I., Hardt, M., &amp; Kim, B. (2018). Sanity checks for saliency maps. <em>NeurIPS 2018</em>.</li>
+      <li>Cian, D., Van Hilten, A., &amp; Onken, A. (2023). Evaluating the fairness of deep learning uncertainty estimates in medical image analysis. <em>Medical Image Analysis</em>, 83, 102647.</li>
+      <li>Singhal, K., Azizi, S., Tu, T., Mahdavi, S. S., Wei, J., Chung, H. W., ... &amp; Natarajan, V. (2023). Large language models encode clinical knowledge. <em>Nature</em>, 620, 172–180. https://doi.org/10.1038/s41586-023-06291-2</li>
+      <li>Li, C., Wong, C., Zhang, S., Usuyama, N., Liu, H., Yang, J., ... &amp; Poon, H. (2024). LLaVA-Med: Training a large language-and-vision assistant for biomedicine in one day. <em>Advances in Neural Information Processing Systems</em>, 36.</li>
+      <li>Abràmoff, M. D., Tobey, D., &amp; Char, D. S. (2020). Lessons learned about autonomous AI: Finding a safe, efficacious, and ethical path through the development process. <em>American Journal of Ophthalmology</em>, 214, 134–142.</li>
+      <li>Rotemberg, V., Kurtansky, N., Betz-Stablein, B., Caffery, L., Cozzio, A., Dascalu, A., ... &amp; Tschandl, P. (2021). A patient-centric dataset of images and metadata for identifying melanomas using clinical context. <em>Scientific Data</em>, 8(1), 34.</li>
+    </ol>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <span>© 2025 Dr. Nitin Mishra, Dr. Rohit — Parul University, Vadodara</span>
+    <span>Submitted for IEEE/Scopus Q1 Publication · All rights reserved</span>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
