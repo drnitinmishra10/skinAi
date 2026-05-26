@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Papers Repository</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --bg-dark: #0f172a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e1b4b 50%, #312e81 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Search & Filter */
+        .controls {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 16px 24px 16px 50px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+            word-break: break-word;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            flex: 0 0 auto;
+            padding: 12px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Error State */
+        .error-state {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        .error-state h3 {
+            color: var(--error);
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 640px) {
+            body {
+                padding: 10px;
+            }
+
+            header {
+                padding: 40px 10px 30px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .stats {
+                gap: 15px;
+            }
+
+            .stat {
+                padding: 10px 16px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Research Papers Repository</h1>
+        <p class="subtitle">
+            Academic publications and conference papers by Dr. Nitin Mishra
+        </p>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="paperCount">0</div>
+                <div class="stat-label">Papers</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="fileCount">0</div>
+                <div class="stat-label">HTML Files</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="controls">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" class="search-box" id="searchInput" placeholder="Search papers by name..." autocomplete="off">
+    </div>
+
+    <div class="grid" id="papersGrid">
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Discovering research papers...</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Dr. Nitin Mishra | Research Repository</p>
+        <p style="margin-top: 8px; font-size: 0.9rem;">
+            Automatically indexes all HTML files in the repository
+        </p>
+    </footer>
+
+</div>
+
+<script>
+    const papersGrid = document.getElementById('papersGrid');
+    const searchInput = document.getElementById('searchInput');
+    const paperCountEl = document.getElementById('paperCount');
+    const fileCountEl = document.getElementById('fileCount');
+
+    let allPapers = [];
+
+    // Extract title from HTML content
+    async function getPageTitle(url) {
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
+
+            const response = await fetch(url, { signal: controller.signal });
+            clearTimeout(timeout);
+
+            if (!response.ok) return null;
+
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const title = doc.querySelector('title');
+            return title ? title.textContent.trim() : null;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    // Strategy 1: Try to fetch directory listing (works on some servers)
+    async function fetchDirectoryListing() {
+        try {
+            const response = await fetch('./');
+            if (!response.ok) return [];
+
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const links = doc.querySelectorAll('a[href]');
+            const htmlFiles = [];
+
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.endsWith('.html') && href !== 'index.html' && !href.startsWith('http')) {
+                    htmlFiles.push({
+                        name: href.replace('.html', '').replace(/-/g, ' ').replace(/_/g, ' '),
+                        file: href,
+                        title: null
+                    });
+                }
+            });
+
+            return htmlFiles;
+        } catch (e) {
+            return [];
+        }
+    }
+
+    // Strategy 2: Probe for common HTML files
+    async function probeForFiles() {
+        const commonNames = [
+            'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10',
+            'c11', 'c12', 'c13', 'c14', 'c15', 'c16', 'c17', 'c18', 'c19', 'c20',
+            'paper1', 'paper2', 'paper3', 'paper4', 'paper5',
+            'research1', 'research2', 'research3',
+            'publication1', 'publication2', 'publication3',
+            'index', 'about', 'contact', 'cv', 'resume',
+            'project1', 'project2', 'project3',
+            'thesis', 'dissertation', 'monograph'
+        ];
+
+        const extensions = ['.html', '.htm'];
+        const found = [];
+
+        const batchSize = 5;
+        for (let i = 0; i < commonNames.length; i += batchSize) {
+            const batch = commonNames.slice(i, i + batchSize);
+            const checks = batch.flatMap(name => 
+                extensions.map(ext => checkFileExists(`${name}${ext}`))
+            );
+
+            const results = await Promise.all(checks);
+
+            results.forEach((result, idx) => {
+                if (result.exists) {
+                    const fileName = batch[Math.floor(idx / extensions.length)] + extensions[idx % extensions.length];
+                    found.push({
+                        name: fileName.replace(/\.html?/, '').replace(/-/g, ' ').replace(/_/g, ' '),
+                        file: fileName,
+                        title: null
+                    });
+                }
+            });
+        }
+
+        return found;
+    }
+
+    async function checkFileExists(url) {
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 3000);
+
+            const response = await fetch(url, { 
+                method: 'HEAD',
+                signal: controller.signal
+            });
+
+            clearTimeout(timeout);
+            return { exists: response.ok, url };
+        } catch (error) {
+            return { exists: false, url };
+        }
+    }
+
+    // Strategy 3: If GitHub Pages, try API
+    async function fetchGitHubFiles() {
+        const hostname = window.location.hostname;
+        if (!hostname.includes('github.io')) return [];
+
+        const username = hostname.split('.')[0];
+        const repoName = window.location.pathname.split('/')[1] || `${username}.github.io`;
+
+        try {
+            const apiUrl = `https://api.github.com/repos/${username}/${repoName}/contents/`;
+            const response = await fetch(apiUrl);
+            if (!response.ok) return [];
+
+            const data = await response.json();
+            return data
+                .filter(item => item.name.endsWith('.html') && item.name !== 'index.html')
+                .map(item => ({
+                    name: item.name.replace('.html', '').replace(/-/g, ' ').replace(/_/g, ' '),
+                    file: item.name,
+                    title: null
+                }));
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function formatTitle(name) {
+        return name
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+
+    function getPaperIcon(name) {
+        const icons = ['📄', '📑', '📊', '🔬', '🧪', '📖', '🎓', '🔍', '💡', '📝'];
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+            hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return icons[Math.abs(hash) % icons.length];
+    }
+
+    async function renderPapers(papers) {
+        papersGrid.innerHTML = '';
+
+        if (papers.length === 0) {
+            papersGrid.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📂</div>
+                    <h3>No HTML files found</h3>
+                    <p>No research papers were discovered in this repository. Add HTML files to see them listed here automatically.</p>
+                </div>
+            `;
+            paperCountEl.textContent = '0';
+            fileCountEl.textContent = '0';
+            return;
+        }
+
+        // Fetch titles for all papers in parallel
+        const titlePromises = papers.map(async (paper) => {
+            const title = await getPageTitle(paper.file);
+            paper.title = title || formatTitle(paper.name);
+            return paper;
+        });
+
+        allPapers = await Promise.all(titlePromises);
+
+        paperCountEl.textContent = allPapers.length;
+        fileCountEl.textContent = allPapers.length;
+
+        allPapers.forEach((paper, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.animationDelay = `${index * 0.05}s`;
+
+            const displayTitle = paper.title || formatTitle(paper.name);
+            const icon = getPaperIcon(paper.name);
+
+            card.innerHTML = `
+                <div class="card-icon">${icon}</div>
+                <h2>${displayTitle}</h2>
+                <div class="card-meta">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    <span>${paper.file}</span>
+                </div>
+                <p>${displayTitle}</p>
+                <div class="card-footer">
+                    <a class="btn" href="${paper.file}" target="_blank" rel="noopener noreferrer">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        Open Paper
+                    </a>
+                    <a class="btn btn-secondary" href="${paper.file}" download title="Download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+            `;
+
+            papersGrid.appendChild(card);
+        });
+    }
+
+    function filterPapers(query) {
+        const filtered = allPapers.filter(paper => 
+            (paper.title && paper.title.toLowerCase().includes(query.toLowerCase())) ||
+            paper.name.toLowerCase().includes(query.toLowerCase()) ||
+            paper.file.toLowerCase().includes(query.toLowerCase())
+        );
+
+        papersGrid.innerHTML = '';
+
+        if (filtered.length === 0) {
+            papersGrid.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">🔍</div>
+                    <h3>No matching papers</h3>
+                    <p>No papers match your search query. Try different keywords.</p>
+                </div>
+            `;
+            return;
+        }
+
+        filtered.forEach((paper, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.animationDelay = `${index * 0.05}s`;
+
+            const displayTitle = paper.title || formatTitle(paper.name);
+            const icon = getPaperIcon(paper.name);
+
+            card.innerHTML = `
+                <div class="card-icon">${icon}</div>
+                <h2>${displayTitle}</h2>
+                <div class="card-meta">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    <span>${paper.file}</span>
+                </div>
+                <p>${displayTitle}</p>
+                <div class="card-footer">
+                    <a class="btn" href="${paper.file}" target="_blank" rel="noopener noreferrer">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        Open Paper
+                    </a>
+                    <a class="btn btn-secondary" href="${paper.file}" download title="Download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+            `;
+
+            papersGrid.appendChild(card);
+        });
+    }
+
+    async function loadPapers() {
+        let papers = await fetchDirectoryListing();
+
+        if (papers.length === 0) {
+            papers = await fetchGitHubFiles();
+        }
+
+        if (papers.length === 0) {
+            papers = await probeForFiles();
+        }
+
+        // Remove duplicates based on filename
+        const seen = new Set();
+        papers = papers.filter(paper => {
+            if (seen.has(paper.file)) return false;
+            seen.add(paper.file);
+            return true;
+        });
+
+        // Sort alphabetically by filename
+        papers.sort((a, b) => a.file.localeCompare(b.file));
+
+        await renderPapers(papers);
+    }
+
+    // Search functionality
+    searchInput.addEventListener('input', (e) => {
+        filterPapers(e.target.value);
+    });
+
+    // Initial load
+    loadPapers();
+</script>
+
+</body>
+</html>
